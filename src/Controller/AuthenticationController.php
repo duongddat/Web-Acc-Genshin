@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 use App\Model\UserModel;
+use App\Model\lichsunaptienModel;
+use App\Model\hoadonModel;
+use App\Model\AccountModel;
 
 class AuthenticationController
 {
@@ -74,6 +77,44 @@ class AuthenticationController
                 $_SESSION['type_message'] = "danger";
                 header("Location: ../user/changePassword");
                 exit();
+            }
+        }
+    }
+    public function naptien()
+    {
+        $user_id = $_POST['user_id'];
+        $sotien = $_POST['sotien'];
+        session_start();
+        $user = (new UserModel())->naptien($user_id, $sotien);
+        $naptien = (new lichsunaptienModel())->AddLichSuNap($user_id, $sotien);
+        $_SESSION['flash_message'] = "Nạp tiền thành công!!!";
+        $_SESSION['type_message'] = "success";
+        header("Location: ../user/index");
+    }
+    public function muaacc()
+    {
+        session_start();
+        $user = $_SESSION['currentUser'];
+        $user_id = $user['user_id'];
+        $acc_id = $_POST['acc_id'];
+        $sotien = $_POST['sotien'];
+        if ($sotien > $user['sotien']) {
+            $_SESSION['flash_message'] = "So Du Khong Du!!!";
+            $_SESSION['type_message'] = "danger";
+            header("Location: ../user/naptien");
+        } else {
+            $acc = (new AccountModel())->getAccountById($acc_id);
+            if ($acc['damua'] == 0) {
+                $user = (new UserModel())->trutien($user_id, $sotien);
+                $hoadon = (new hoadonModel())->Addhoadon($acc_id, $user_id, $sotien);
+                $mua = (new AccountModel())->muaacc($acc_id);
+                $_SESSION['flash_message'] = "Mua acc thành công!!!";
+                $_SESSION['type_message'] = "success";
+                header("Location: ../user/hoadonlist");
+            } else {
+                $_SESSION['flash_message'] = "Giao Dịch Thất Bại-Bạn Đã Chậm Tay!!!";
+                $_SESSION['type_message'] = "danger";
+                header("Location: ../user/index");
             }
         }
     }

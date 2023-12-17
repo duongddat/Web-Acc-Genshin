@@ -42,6 +42,9 @@ if (isUserLoggedIn()) {
                     <li class="nav-item">
                         <a class="nav-link" href="/">Home</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/naptien">Nạp Tiền</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav">
                     <?php
@@ -52,9 +55,18 @@ if (isUserLoggedIn()) {
                             <a class="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown"> Hello! <?= $loginUser['taikhoan'] ?></a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="/user/changePassword">Đổi mật khẩu</a></li>
+                                <li><a class="dropdown-item" href="/user/naptienlist">Lịch Sử Nạp</a></li>
+                                <li><a class="dropdown-item" href="/user/hoadonlist">Lịch Sử Giao Dịch</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
                                 <?php if ($loginUser['isAdmin'] == 1) { ?>
                                     <li><a class="dropdown-item" href="/admin/user-list">Quản lý người dùng</a></li>
                                     <li><a class="dropdown-item" href="/admin/account-list">Quản lý accounts</a></li>
+                                    <li><a class="dropdown-item" href="/admin/quanlynap">Quản lý Nạp</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
                                 <?php } ?>
                                 <li><a class="dropdown-item" href="/user/logout">Đăng xuất</a></li>
                             </ul>

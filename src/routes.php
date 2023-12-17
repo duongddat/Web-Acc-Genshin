@@ -2,6 +2,8 @@
 
 use App\Controller\AccountController;
 use App\Controller\AuthenticationController;
+use App\Controller\hoadonController;
+use App\Controller\naptienController;
 use App\Router;
 use App\Controller\UserController;
 
@@ -19,7 +21,12 @@ $router->addRoute('/\/user\/create/', [new UserController(), 'create']);
 $router->addRoute('/\/user\/signin/', [new UserController(), 'signin']);
 $router->addRoute('/\/user\/register/', [new UserController(), 'register']);
 $router->addRoute('/\/user\/changePassword/', [new UserController(), 'changePassword']);
+$router->addRoute('/\/user\/naptien/', [new UserController(), 'naptien']);
 $router->addRoute('/\/auth\/validate/', [new AuthenticationController(), 'authenticate']);
+$router->addRoute('/\/auth\/naptien/', [new AuthenticationController(), 'naptien']);
+$router->addRoute('/\/auth\/muaacc/', [new AuthenticationController(), 'muaacc']);
+$router->addRoute('/\/user\/naptienlist/', [new naptienController(), 'naptienlistid']);
+$router->addRoute('/\/user\/hoadonlist/', [new hoadonController(), 'HoaDonListId']);
 $router->addRoute('/\/auth\/changePassword/', [new AuthenticationController(), 'changePassword']);
 $router->addRoute('/\/user\/logout/', [new UserController(), 'logout']);
 $router->addRoute('/\/admin\/account-list/', [new AccountController(), 'accountList']);
@@ -27,3 +34,4 @@ $router->addRoute('/\/admin\/account-create/', [new AccountController(), 'create
 $router->addRoute('/\/admin\/account-detail\/(\d+)/', [new AccountController(), 'getAccount']);
 $router->addRoute('/\/admin\/account-form\/(\d+)/', [new AccountController(), 'updateAccount']);
 $router->addRoute('/\/admin\/account-delete\/(\d+)/', [new AccountController(), 'deleteAccount']);
+$router->addRoute('/\/admin\/quanlynap/', [new naptienController(), 'naptienlist']);

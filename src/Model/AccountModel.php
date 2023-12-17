@@ -73,4 +73,10 @@ class AccountModel
         $acc_id = $this->mysqli->real_escape_string($acc_id);
         $this->mysqli->query("DELETE FROM acc WHERE acc_id=$acc_id");
     }
+
+    public function muaacc($acc_id)
+    {
+        $acc_id = $this->mysqli->real_escape_string($acc_id);
+        return $this->mysqli->query("UPDATE acc SET damua=1 WHERE acc_id=$acc_id");
+    }
 }

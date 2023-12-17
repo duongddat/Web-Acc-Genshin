@@ -84,4 +84,17 @@ class UserModel
         $userId = $this->mysqli->real_escape_string($userId);
         $this->mysqli->query("DELETE FROM user WHERE user_id=$userId");
     }
+
+    public function naptien($userId, $naptien)
+    {
+        $userId = $this->mysqli->real_escape_string($userId);
+        $naptien = $this->mysqli->real_escape_string($naptien);
+        return $this->mysqli->query("UPDATE user SET sotien=sotien+$naptien  WHERE user_id=$userId");
+    }
+    public function trutien($userId, $naptien)
+    {
+        $userId = $this->mysqli->real_escape_string($userId);
+        $naptien = $this->mysqli->real_escape_string($naptien);
+        return $this->mysqli->query("UPDATE user SET sotien=sotien-$naptien  WHERE user_id=$userId");
+    }
 }

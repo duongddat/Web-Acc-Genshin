@@ -107,6 +107,17 @@ class UserController extends Controller
             echo 'User creation failed.';
         }
     }
+    public function naptien()
+    {
+        session_start();
+        $user = $_SESSION['currentUser'];
+        if ($user == null) {
+            $_SESSION['flash_message'] = "Vui lòng Đăng Nhập!!!";
+            $_SESSION['type_message'] = "danger";
+            header("Location: ../index");
+            exit();
+        } else $this->render('users\naptien', ['user' => $user]);
+    }
 
     // public function userList()
     // {
