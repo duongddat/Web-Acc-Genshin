@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Model;
+
+use LengthException;
+
 //require_once(__DIR__ . '/../../config.php');
 
 class AccountModel
@@ -78,5 +81,33 @@ class AccountModel
     {
         $acc_id = $this->mysqli->real_escape_string($acc_id);
         return $this->mysqli->query("UPDATE acc SET damua=1 WHERE acc_id=$acc_id");
+    }
+
+    public function getAccountByType($type)
+    {
+        $AccountsByType = $this->mysqli->query("SELECT * from acc
+        where loaiacc_id=" . $type . " AND damua = 0");
+        return $AccountsByType;
+    }
+
+    public function getAccountByType_search($type, $level, $price, $server)
+    {
+        if ($server == "allserver") {
+            $sql = "SELECT * FROM acc 
+        WHERE loaiacc_id = " . $type . " 
+        AND level >= " . $level . "
+        AND gia <= " . $price . "
+        AND damua = 0";
+        } else {
+            $sql = "SELECT * FROM acc 
+        WHERE loaiacc_id = " . $type . " 
+        AND level >= " . $level . "
+        AND gia <= " . $price . " 
+        AND  khuvuc LIKE '" . $server . "'
+        AND damua = 0";
+        }
+        // echo $sql."\n";
+        $AccountsByType = $this->mysqli->query($sql);
+        return $AccountsByType;
     }
 }

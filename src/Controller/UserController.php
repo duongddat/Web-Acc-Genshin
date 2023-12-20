@@ -13,10 +13,15 @@ class UserController extends Controller
     {
         $this->userModel = new UserModel();
     }
-
+    //get Allusers
     public function index()
     {
-        $this->render('users\index', []);
+        $allusers = $this->userModel->getAllUsers_topnaptien();
+        $typeAcc = $this->userModel->getsoban();
+        $sltypeAcc = $this->userModel->getslByType();
+        $this->render('users\index', ['allusers' => $allusers, 'typeaccs' => $typeAcc, 'slaccs' => $sltypeAcc]);
+        // $this->render('users\index', []);
+
     }
 
     public function signin()
@@ -100,7 +105,7 @@ class UserController extends Controller
             $_SESSION['type_message'] = "success";
             $_SESSION['currentUser'] = $this->userModel->getUserByUsername($username);
 
-            header("Location: ../user/index");
+            header("Location: ../index");
             exit();
         } else {
             // Handle the case where the user creation failed
@@ -118,6 +123,12 @@ class UserController extends Controller
             exit();
         } else $this->render('users\naptien', ['user' => $user]);
     }
+
+    // public function getAllUsers(){
+    //     $allusers=$this->userModel->getAllUsers();
+    //     $this->render('users\index',['allusers'=> $allusers]);
+    // }
+
 
     // public function userList()
     // {
@@ -143,10 +154,6 @@ class UserController extends Controller
     //     $this->render('users\user-form', ['user' => $user]);
 
     // }
-
-
-
-
 
     //     // Display the form to create a new user
 
@@ -181,8 +188,6 @@ class UserController extends Controller
     //         $this->render('users\user-form', ['user' => $user]);
 
     //     }
-
-
     // }
 
     // private function processFormUpdate($userId){

@@ -24,7 +24,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="amountChar" class="form-label">Số lượng tướng:</label>
-                        <input type="number" class="form-control" id="amountChar" name="amountChar" value="<?= $account['sotuongtuong'] ?>" required>
+                        <input type="number" class="form-control" id="amountChar" name="amountChar" value="<?= $account['soluongtuong'] ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="amountWeapon" class="form-label">Số lượng vũ khí:</label>

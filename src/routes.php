@@ -34,4 +34,12 @@ $router->addRoute('/\/admin\/account-create/', [new AccountController(), 'create
 $router->addRoute('/\/admin\/account-detail\/(\d+)/', [new AccountController(), 'getAccount']);
 $router->addRoute('/\/admin\/account-form\/(\d+)/', [new AccountController(), 'updateAccount']);
 $router->addRoute('/\/admin\/account-delete\/(\d+)/', [new AccountController(), 'deleteAccount']);
+$router->addRoute('/\/admin\/account-type-list/', [new AccountController(), 'accountTypeList']);
+$router->addRoute('/\/admin\/account-type-create/', [new AccountController(), 'createTypeAccount']);
+$router->addRoute('/\/admin\/account-type-detail\/(\d+)/', [new AccountController(), 'getTypeAccount']);
+$router->addRoute('/\/admin\/account-type-form\/(\d+)/', [new AccountController(), 'updateTypeAccount']);
+$router->addRoute('/\/admin\/account-type-delete\/(\d+)/', [new AccountController(), 'deleteTypeAccount']);
 $router->addRoute('/\/admin\/quanlynap/', [new naptienController(), 'naptienlist']);
+$router->addRoute('/\/user\/(\w+)/', [new AccountController(), 'acctype']);
+$router->addRoute('/\/user\/acc-detail\/(\d+)/', [new AccountController(), 'accdetail']);
+$router->addRoute('/\/user\/search\/(\w+)/', [new AccountController(), 'acctype']);

@@ -6,7 +6,7 @@ use App\Model\AccountModel;
 use App\Model\TypeAccountModel;
 use App\Controller;
 
-class AccountController extends Controller
+class TypeAccountController extends Controller
 {
     private $accountModel;
 
@@ -174,37 +174,5 @@ class AccountController extends Controller
         $_SESSION['type_message'] = "success";
 
         header("Location: ../admin/account-list");
-    }
-
-    public function acctype()
-    {
-        $level = isset($_POST['level']) ? (int)$_POST['level'] : null;
-        $price = isset($_POST['price']) ? (int)$_POST['price'] : null;
-        $server = isset($_POST['acc_server']) ? $_POST['acc_server'] : null;
-
-        $type = 0;
-        $uri = $_SERVER['REQUEST_URI'];
-        $uri = basename($uri);
-        $decodedUri = urldecode($uri);
-
-        $loaiaccs = (new TypeAccountModel())->getAllAccounts();
-        foreach ($loaiaccs as $loaiacc) {
-            if (str_replace(' ', '', strtolower($loaiacc['loaiacc'])) == $decodedUri) {
-                $type = $loaiacc['loaiacc_id'];
-            }
-        }
-
-        if ($level !== null && $price !== null && $server !== null) {
-            $Accounts = $this->accountModel->getAccountByType_search($type, $level, $price, $server);
-            $this->render('users\acctype', ['accounts' => $Accounts]);
-        } else {
-            $Accounts = $this->accountModel->getAccountByType($type);
-            $this->render('users\acctype', ['accounts' => $Accounts]);
-        }
-    }
-    public function accdetail($accId)
-    {
-        $Account = $this->accountModel->getAccountById($accId);
-        $this->render('users\accdetail', ['account' => $Account]);
     }
 }

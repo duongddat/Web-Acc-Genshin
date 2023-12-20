@@ -32,7 +32,7 @@ class AuthenticationController
                 $_SESSION['flash_message'] = "Đăng nhập thành công!!!";
                 $_SESSION['type_message'] = "success";
 
-                header("Location: ../user/index");
+                header("Location: ../index");
                 exit();
             } else {
                 // Authentication failed, redirect to signin.php
@@ -70,7 +70,7 @@ class AuthenticationController
                 $_SESSION['flash_message'] = "Đổi mật khẩu thành công!!!";
                 $_SESSION['type_message'] = "success";
 
-                header("Location: ../user/index");
+                header("Location: ../index");
                 exit();
             } else {
                 $_SESSION['flash_message'] = "Sai mật khẩu!!!";
@@ -80,6 +80,7 @@ class AuthenticationController
             }
         }
     }
+
     public function naptien()
     {
         $user_id = $_POST['user_id'];
@@ -87,10 +88,12 @@ class AuthenticationController
         session_start();
         $user = (new UserModel())->naptien($user_id, $sotien);
         $naptien = (new lichsunaptienModel())->AddLichSuNap($user_id, $sotien);
+        $_SESSION['currentUser'] = (new UserModel())->getUserById($user_id);
         $_SESSION['flash_message'] = "Nạp tiền thành công!!!";
         $_SESSION['type_message'] = "success";
-        header("Location: ../user/index");
+        header("Location: ../index");
     }
+
     public function muaacc()
     {
         session_start();
@@ -108,13 +111,14 @@ class AuthenticationController
                 $user = (new UserModel())->trutien($user_id, $sotien);
                 $hoadon = (new hoadonModel())->Addhoadon($acc_id, $user_id, $sotien);
                 $mua = (new AccountModel())->muaacc($acc_id);
+                $_SESSION['currentUser'] = (new UserModel())->getUserById($user_id);
                 $_SESSION['flash_message'] = "Mua acc thành công!!!";
                 $_SESSION['type_message'] = "success";
                 header("Location: ../user/hoadonlist");
             } else {
                 $_SESSION['flash_message'] = "Giao Dịch Thất Bại-Bạn Đã Chậm Tay!!!";
                 $_SESSION['type_message'] = "danger";
-                header("Location: ../user/index");
+                header("Location: ../index");
             }
         }
     }

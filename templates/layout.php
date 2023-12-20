@@ -52,7 +52,7 @@ if (isUserLoggedIn()) {
                     if ($loginUser) {
                     ?>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown"> Hello! <?= $loginUser['taikhoan'] ?></a>
+                            <a class="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown"> Hello! <?= $loginUser['taikhoan'] ?>, <?= $loginUser['sotien'] ?> đồng</a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="/user/changePassword">Đổi mật khẩu</a></li>
                                 <li><a class="dropdown-item" href="/user/naptienlist">Lịch Sử Nạp</a></li>
@@ -86,7 +86,6 @@ if (isUserLoggedIn()) {
 
     <div class="container mt-3">
         <?php
-
         if (isset($_SESSION['flash_message']) && isset($_SESSION['type_message'])) {
             $message = $_SESSION['flash_message'];
             $type_message = $_SESSION['type_message'];
@@ -95,10 +94,10 @@ if (isUserLoggedIn()) {
             unset($_SESSION['flash_message']);
 
             echo '<div class="alert alert-' . $type_message . ' alert-dismissible fade show" role="alert">
-        <strong>' . strtoupper($type_message) . '</strong> '
+                    <strong>' . strtoupper($type_message) . '</strong> '
                 . $message .
                 '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>';
+                    </div>';
         }
         ?>
         <?= $content ?>

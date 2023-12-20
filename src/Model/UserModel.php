@@ -28,6 +28,18 @@ class UserModel
         $result = $this->mysqli->query("SELECT * FROM user");
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+    public function getAllUsers_topnaptien()
+    {
+        $result = $this->mysqli->query(
+            "SELECT user.user_id, user.hoten, SUM(lichsunap.sotiennap) as Tongsotien 
+            FROM user 
+            INNER JOIN lichsunap ON user.user_id = lichsunap.User_id
+            GROUP BY user.user_id, user.hoten
+            ORDER BY Tongsotien DESC
+            LIMIT 10"
+        );
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 
     public function getUserById($userId)
     {
@@ -96,5 +108,34 @@ class UserModel
         $userId = $this->mysqli->real_escape_string($userId);
         $naptien = $this->mysqli->real_escape_string($naptien);
         return $this->mysqli->query("UPDATE user SET sotien=sotien-$naptien  WHERE user_id=$userId");
+    }
+    // public function getsoban()
+    // {
+    //     $typeAcc = $this->mysqli->query("SELECT loaiacc.loaiacc_id, loaiacc, COUNT(damua) AS Tongsoban
+    //         FROM loaiacc
+    //         LEFT JOIN acc ON loaiacc.loaiacc_id = acc.loaiacc_id AND damua = 1
+    //         GROUP BY loaiacc.loaiacc_id, loaiacc");
+    //     return $typeAcc;
+    // }
+    // public function getslByType()
+    // {
+    //     $sltypeAcc = $this->mysqli->query("SELECT loaiacc_id,COUNT(loaiacc_id) as Tongsoacc FROM acc WHERE damua = 0  GROUP BY acc.loaiacc_id");
+    //     return $sltypeAcc;
+    // }
+    public function getsoban()
+    {
+        $typeAcc = $this->mysqli->query("SELECT loaiacc.loaiacc_id, loaiacc, COUNT(damua) AS Tongsoban
+        FROM loaiacc
+        LEFT JOIN acc ON loaiacc.loaiacc_id = acc.loaiacc_id AND damua = 1
+        GROUP BY loaiacc.loaiacc_id, loaiacc");
+        return $typeAcc;
+    }
+    public function getslByType()
+    {
+        $sltypeAcc = $this->mysqli->query("SELECT loaiacc.loaiacc_id, loaiacc, COUNT(damua) AS Tongsoacc 
+        FROM loaiacc
+        LEFT JOIN acc ON loaiacc.loaiacc_id = acc.loaiacc_id AND damua = 0
+        GROUP BY loaiacc.loaiacc_id, loaiacc");
+        return $sltypeAcc;
     }
 }
