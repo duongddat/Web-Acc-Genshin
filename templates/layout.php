@@ -65,6 +65,7 @@ if (isUserLoggedIn()) {
                                     <li><a class="dropdown-item" href="/admin/account-list">Quản lý accounts</a></li>
                                     <li><a class="dropdown-item" href="/admin/type-account-list">Quản lý loại accounts</a></li>
                                     <li><a class="dropdown-item" href="/admin/quanlynap">Quản lý Nạp</a></li>
+                                    <li><a class="dropdown-item" href="/admin/thongke">Thống Kê</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>

@@ -43,4 +43,5 @@ $router->addRoute('/\/admin\/create-new-user/', [new UserController(), 'createUs
 $router->addRoute('/\/admin\/show-user\/(\d+)/', [new UserController(), 'show']);
 $router->addRoute('/\/admin\/update-user-info\/(\d+)/', [new UserController(), 'update']);
 $router->addRoute('/\/admin\/delete-user\/(\d+)/', [new UserController(), 'delete']);
+$router->addRoute('/\/admin\/thongke/', [new hoadonController(), 'thongke']);
 $router->addRoute('/\/admin\/quanlynap/', [new naptienController(), 'naptienlist']);
