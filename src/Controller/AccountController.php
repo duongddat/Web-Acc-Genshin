@@ -30,7 +30,7 @@ class AccountController extends Controller
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->processForm();
         } else {
-            $types = (new TypeAccountModel())->getAllAccounts();
+            $types = (new TypeAccountModel())->getAllTypeAccounts();
             $this->render('admin\create-account', ['types' => $types]);
         }
     }
@@ -91,7 +91,7 @@ class AccountController extends Controller
     public function getAccount($accId)
     {
         $account = $this->accountModel->getAccountById($accId);
-        $types = (new TypeAccountModel())->getAllAccounts();
+        $types = (new TypeAccountModel())->getAllTypeAccounts();
 
         $this->render('admin\account-detail', ['account' => $account, 'types' => $types]);
     }
@@ -104,7 +104,7 @@ class AccountController extends Controller
         } else {
             // Fetch the user data and display the form to update
             $account = $this->accountModel->getAccountById($accId);
-            $types = (new TypeAccountModel())->getAllAccounts();
+            $types = (new TypeAccountModel())->getAllTypeAccounts();
 
             $this->render('admin\account-form', ['account' => $account, 'types' => $types]);
         }
@@ -166,7 +166,7 @@ class AccountController extends Controller
     public function deleteAccount($accId)
     {
         // Call the model to delete the user
-        $this->accountModel->deleteUser($accId);
+        $this->accountModel->deleteAccount($accId);
 
         // Redirect to the user list page after deletion
         session_start();
@@ -187,7 +187,7 @@ class AccountController extends Controller
         $uri = basename($uri);
         $decodedUri = urldecode($uri);
 
-        $loaiaccs = (new TypeAccountModel())->getAllAccounts();
+        $loaiaccs = (new TypeAccountModel())->getAllTypeAccounts();
         foreach ($loaiaccs as $loaiacc) {
             if (str_replace(' ', '', strtolower($loaiacc['loaiacc'])) == $decodedUri) {
                 $type = $loaiacc['loaiacc_id'];

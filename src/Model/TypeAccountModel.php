@@ -23,47 +23,40 @@ class TypeAccountModel
         }
     }
 
-    public function getAllAccounts()
+    public function getAllTypeAccounts()
     {
         $result = $this->mysqli->query("SELECT * FROM loaiacc");
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    // public function getUserById($userId)
-    // {
-    //     $userId = $this->mysqli->real_escape_string($userId);
-    //     $result = $this->mysqli->query("SELECT * FROM user WHERE user_id = $userId");
+    public function getTypeAccountById($loaiaccId)
+    {
+        $loaiaccId = $this->mysqli->real_escape_string($loaiaccId);
+        $result = $this->mysqli->query("SELECT * FROM loaiacc WHERE loaiacc_id = $loaiaccId");
 
-    //     return $result->fetch_assoc();
-    // }
+        return $result->fetch_assoc();
+    }
 
-    // public function createUser($name, $email, $username, $password)
-    // {
-    //     $name = $this->mysqli->real_escape_string($name);
-    //     $email = $this->mysqli->real_escape_string($email);
-    //     $username = $this->mysqli->real_escape_string($username);
-    //     $password = $this->mysqli->real_escape_string($password);
+    public function createTypeAccount($loaiacc, $img)
+    {
+        $loaiacc = $this->mysqli->real_escape_string($loaiacc);
+        $img = $this->mysqli->real_escape_string($img);
 
-    //     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        return $this->mysqli->query("INSERT INTO loaiacc (loaiacc, img) VALUES ('$loaiacc', '$img')");
+    }
 
-    //     return $this->mysqli->query("INSERT INTO user (taikhoan, matkhau, hoten, gmail, sotien, isAdmin) VALUES ('$username', '$hashedPassword', '$name', '$email', 0, 0)");
-    // }
+    public function updateTypeAccount($loaiacc_id, $loaiacc, $img)
+    {
+        $loaiacc_id = $this->mysqli->real_escape_string($loaiacc_id);
+        $loaiacc = $this->mysqli->real_escape_string($loaiacc);
+        $img = $this->mysqli->real_escape_string($img);
 
-    // public function updateUser($userId, $username, $password, $email)
-    // {
-    //     $userId = $this->mysqli->real_escape_string($userId);
-    //     $username = $this->mysqli->real_escape_string($username);
-    //     $password = $this->mysqli->real_escape_string($password);
-    //     $email = $this->mysqli->real_escape_string($email);
+        return $this->mysqli->query("UPDATE loaiacc SET loaiacc = '$loaiacc', img='$img' WHERE loaiacc_id=$loaiacc_id");
+    }
 
-    //     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-    //     return $this->mysqli->query("UPDATE users SET username='$username', password_input='$hashedPassword', email='$email' WHERE id=$userId");
-    // }
-
-    // public function deleteUser($userId)
-    // {
-    //     $userId = $this->mysqli->real_escape_string($userId);
-    //     $this->mysqli->query("DELETE FROM user WHERE user_id=$userId");
-    // }
+    public function deleteTypeAccount($loaiacc_id)
+    {
+        $loaiacc_id = $this->mysqli->real_escape_string($loaiacc_id);
+        $this->mysqli->query("DELETE FROM loaiacc WHERE loaiacc_id=$loaiacc_id");
+    }
 }

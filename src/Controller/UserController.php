@@ -61,57 +61,49 @@ class UserController extends Controller
     public function create()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $this->processForm();
-        } else {
-            // Display the form for creating a new user
-            //include 'views/user-form.php';
-            $this->render('users\user-form', ['user' => []]);
+            // Retrieve form data
+            $name = $_POST['name'];
+            $email = $_POST['email'];
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+            $configPassword = $_POST['configPassword'];
+
+            session_start();
+
+            if ($password != $configPassword) {
+                $_SESSION['flash_message'] = "Vui lòng xác nhận chính xác mật khẩu!!!";
+                $_SESSION['type_message'] = "danger";
+
+                header("Location: ../user/register");
+                exit();
+            }
+
+            if ($this->userModel->getUserByUsername($username) != null) {
+                $_SESSION['flash_message'] = "Vui lòng chọn tên đăng nhập khác!!!";
+                $_SESSION['type_message'] = "danger";
+
+                header("Location: ../user/register");
+                exit();
+            }
+
+            // Call the model to create a new user
+            $user = $this->userModel->createUser($name, $email, $username, $password);
+
+            if ($user) {
+                // Redirect to the user list page or show a success message
+                $_SESSION['flash_message'] = "Đăng ký tài khoản thành công!!!";
+                $_SESSION['type_message'] = "success";
+                $_SESSION['currentUser'] = $this->userModel->getUserByUsername($username);
+
+                header("Location: ../index");
+                exit();
+            } else {
+                // Handle the case where the user creation failed
+                echo 'User creation failed.';
+            }
         }
     }
 
-    private function processForm()
-    {
-        // Retrieve form data
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $configPassword = $_POST['configPassword'];
-
-        session_start();
-
-        if ($password != $configPassword) {
-            $_SESSION['flash_message'] = "Vui lòng xác nhận chính xác mật khẩu!!!";
-            $_SESSION['type_message'] = "danger";
-
-            header("Location: ../user/register");
-            exit();
-        }
-
-        if ($this->userModel->getUserByUsername($username) != null) {
-            $_SESSION['flash_message'] = "Vui lòng chọn tên đăng nhập khác!!!";
-            $_SESSION['type_message'] = "danger";
-
-            header("Location: ../user/register");
-            exit();
-        }
-
-        // Call the model to create a new user
-        $user = $this->userModel->createUser($name, $email, $username, $password);
-
-        if ($user) {
-            // Redirect to the user list page or show a success message
-            $_SESSION['flash_message'] = "Đăng ký tài khoản thành công!!!";
-            $_SESSION['type_message'] = "success";
-            $_SESSION['currentUser'] = $this->userModel->getUserByUsername($username);
-
-            header("Location: ../index");
-            exit();
-        } else {
-            // Handle the case where the user creation failed
-            echo 'User creation failed.';
-        }
-    }
     public function naptien()
     {
         session_start();
@@ -124,101 +116,119 @@ class UserController extends Controller
         } else $this->render('users\naptien', ['user' => $user]);
     }
 
-    // public function getAllUsers(){
-    //     $allusers=$this->userModel->getAllUsers();
-    //     $this->render('users\index',['allusers'=> $allusers]);
-    // }
+
+    //ADMIN
+    public function getAllUsers()
+    {
+        $users = $this->userModel->getAllUsers();
+        $this->render('admin\user-list', ['users' => $users]);
+    }
+
+    public function show($userId)
+    {
+        // Fetch a single user by ID and display in a view
+        $user = $this->userModel->getUserById($userId);
+        $this->render('admin\user-detail', ['user' => $user]);
+    }
+
+    public function createUser()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->processForm();
+        } else {
+            // Display the form for creating a new user
+            $this->render('admin\create-user', []);
+        }
+    }
+
+    private function processForm()
+    {
+        // Retrieve form data
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $username = $_POST['username'];
+        $password = $_POST['password'];
 
 
-    // public function userList()
-    // {
-    //     // Fetch all users and display them in a view
-    //     $users = $this->userModel->getAllUsers();
-    //     //$data = [];
-    //     //$data['users'] = $users;
-    //     //include(__DIR__ . '/../View/users/user-list.php');
-    //     //view('users\user-list', $data);
+        session_start();
+        if ($this->userModel->getUserByUsername($username) != null) {
+            $_SESSION['flash_message'] = "Vui lòng chọn tên đăng nhập khác!!!";
+            $_SESSION['type_message'] = "danger";
 
-    //     $this->render('users\user-list', ['users' => $users]);
-    // }
+            header("Location: ../admin/create-new-user");
+            exit();
+        }
+        // Call the model to create a new user
+        $user = $this->userModel->createUser($name, $email, $username, $password);
 
-    // public function show($userId)
-    // {
-    //     // Fetch a single user by ID and display in a view
-    //     $user = $this->userModel->getUserById($userId);
-    //     //$data = [];
-    //     //$data['user'] = $user;
-    //     //include(__DIR__ . '/../View/users/user-form.php');
-    //     //view('users\user-form', $data);
+        if ($user) {
+            // Redirect to the user list page or show a success message
+            $_SESSION['flash_message'] = "Tạo tài khoản thành công!!!";
+            $_SESSION['type_message'] = "success";
+            $_SESSION['currentUser'] = $this->userModel->getUserByUsername($username);
 
-    //     $this->render('users\user-form', ['user' => $user]);
+            header("Location: ../admin/user-list");
+            exit();
+        } else {
+            // Handle the case where the user creation failed
+            echo 'User creation failed.';
+        }
+    }
 
-    // }
+    public function update($userId)
+    {
+        // Handle form submission to update a user
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $user = $this->userModel->getUserById($userId);
+            $currentName = $user['taikhoan'];
 
-    //     // Display the form to create a new user
+            $this->processFormUpdate($userId, $currentName);
+        } else {
+            // Fetch the user data and display the form to update
+            $user = $this->userModel->getUserById($userId);
+            $this->render('admin\user-form', ['user' => $user]);
+        }
+    }
 
-    //     //include(__DIR__ . '/../View/users/user-form.php');
-    //     //$data = [];
-    //     //$data['user'] = [];
-    //     //view('users\user-form', $data);
-    //     //$this->render('users\user-form', ['user' => []]);
+    private function processFormUpdate($userId, $currentName)
+    {
+        // Retrieve form data
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $sotien = $_POST['sotien'];
 
-    // public function update($userId)
-    // {
-    //     // Handle form submission to update a user
-    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //         $this->processFormUpdate($userId);
-    //         /*
-    //         // Retrieve form data
-    //         $username = $_POST['username'];
-    //         $password = $_POST['password'];
-    //         $email = $_POST['email'];
+        session_start();
+        if ($username != $currentName && $this->userModel->getUserByUsername($username) != null) {
+            $_SESSION['flash_message'] = "Vui lòng chọn tên đăng nhập khác!!!";
+            $_SESSION['type_message'] = "danger";
 
-    //         // Call the model to update the user
-    //         $this->userModel->updateUser($userId, $username, $password, $email);
-    //         */
-    //     } else {
-    //         // Fetch the user data and display the form to update
-    //         $user = $this->userModel->getUserById($userId);
+            header('Location: /admin/update-user-info/' . $userId);
+            exit();
+        }
 
-    //         //include(__DIR__ . '/../View/users/user-form.php');
-    //         //$data = [];
-    //         //$data['user'] = $user;
-    //         //view('users\user-form', $data);
-    //         $this->render('users\user-form', ['user' => $user]);
+        // Call the model to update the user
+        $user = $this->userModel->updateUser($userId, $username, $password, $name, $email, $sotien);
 
-    //     }
-    // }
+        if ($user) {
+            // Redirect to the user list page or show a success message
+            $_SESSION['flash_message'] = "Chỉnh sửa tài khoản thành công!!!";
+            $_SESSION['type_message'] = "success";
+            header('Location: ../admin/user-list');
+            exit();
+        } else {
+            // Handle the case where the user creation failed
+            echo 'User update failed.';
+        }
+    }
 
-    // private function processFormUpdate($userId){
+    public function delete($userId)
+    {
+        // Call the model to delete the user
+        $this->userModel->deleteUser($userId);
 
-    //     // Retrieve form data
-    //     $username = $_POST['username'];
-    //     $password = $_POST['password'];
-    //     $email = $_POST['email'];
-
-    //     // Call the model to update the user
-    //     // $this->userModel->updateUser($userId, $username, $password, $email);
-
-    //     // Call the model to update the user
-    //     $user = $this->userModel->updateUser($userId, $username, $password, $email);
-
-    //     if ($user) {
-    //         // Redirect to the user list page or show a success message
-    //         header('Location: /user/index');
-    //         exit();
-    //     } else {
-    //         // Handle the case where the user creation failed
-    //         echo 'User update failed.';
-    //     }
-    // }
-
-    // public function delete($userId)
-    // {
-    //     // Call the model to delete the user
-    //     $this->userModel->deleteUser($userId);
-
-    //     // Redirect to the user list page after deletion
-    //     header('Location: /index.php');
-    // }
+        // Redirect to the user list page after deletion
+        header('Location: ../admin/user-list');
+    }
 }

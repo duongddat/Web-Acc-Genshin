@@ -26,7 +26,7 @@ if (isUserLoggedIn()) {
     <!-- Include Bootstrap CSS via CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Customer CSS -->
-    <link rel="stylesheet" href=".././public/css/main.css">
+    <link rel="stylesheet" href="/public/css/main.css">
     <title>Shop Acc Genshin</title>
 </head>
 
@@ -63,6 +63,7 @@ if (isUserLoggedIn()) {
                                 <?php if ($loginUser['isAdmin'] == 1) { ?>
                                     <li><a class="dropdown-item" href="/admin/user-list">Quản lý người dùng</a></li>
                                     <li><a class="dropdown-item" href="/admin/account-list">Quản lý accounts</a></li>
+                                    <li><a class="dropdown-item" href="/admin/type-account-list">Quản lý loại accounts</a></li>
                                     <li><a class="dropdown-item" href="/admin/quanlynap">Quản lý Nạp</a></li>
                                     <li>
                                         <hr class="dropdown-divider">

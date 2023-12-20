@@ -54,7 +54,7 @@
 /* css */
 body {
   box-sizing: border-box;
-  background-image: url("../asset/bgImg/anhnen.webp");
+  background-image: url("/public/asset/bgImg/anhnen.webp");
   background-size: cover;
 }
 

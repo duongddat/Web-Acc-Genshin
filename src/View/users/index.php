@@ -21,7 +21,7 @@
                 <div class="genshin-product">
                     <div class="wrapper product-wrapper">
                         <a href="">
-                            <img class="img-banner" src="https://shopgenshin24h.com/files/13/images/2023-07-16/acc-vip-w9.webp">
+                            <img class="img-banner" src="public/asset/imgType/<?= $typeacc['img'] != null ? $typeacc['img'] : 'momo-upload-api-211129134518-637737903186897335.webp' ?>">
                         </a>
                         <h2 class="note__title">
                             <?php echo $typeacc['loaiacc'] ?>

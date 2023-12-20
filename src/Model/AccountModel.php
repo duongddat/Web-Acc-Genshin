@@ -71,7 +71,7 @@ class AccountModel
         return $this->mysqli->query("UPDATE acc SET level = $level, khuvuc ='$area', soluongtuong = $amountChar, soluongvukhi = $amountWeapon, img='$img', gia = $cost, loaiacc_id = $typeId, taikhoan = '$account', matkhau = '$password' WHERE acc_id=$acc_id");
     }
 
-    public function deleteUser($acc_id)
+    public function deleteAccount($acc_id)
     {
         $acc_id = $this->mysqli->real_escape_string($acc_id);
         $this->mysqli->query("DELETE FROM acc WHERE acc_id=$acc_id");

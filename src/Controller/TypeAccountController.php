@@ -8,46 +8,38 @@ use App\Controller;
 
 class TypeAccountController extends Controller
 {
-    private $accountModel;
+    private $typeAccountModel;
 
     public function __construct()
     {
-        $this->accountModel = new AccountModel();
+        $this->typeAccountModel = new TypeAccountModel();
     }
 
-    public function accountList()
+    public function typeAccountList()
     {
         // Fetch all users and display them in a view
-        $accounts = $this->accountModel->getAllAccounts();
+        $types = $this->typeAccountModel->getAllTypeAccounts();
 
-        $this->render('admin\account-list', ['accounts' => $accounts]);
+        $this->render('admin\type-account-list', ['types' => $types]);
     }
 
 
 
-    public function createAccount()
+    public function createTypeAccount()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->processForm();
         } else {
-            $types = (new TypeAccountModel())->getAllAccounts();
-            $this->render('admin\create-account', ['types' => $types]);
+            $this->render('admin\create-type-account', []);
         }
     }
 
     private function processForm()
     {
         // Retrieve form data
-        $level = $_POST['level'];
-        $area = $_POST['area'];
-        $amountChar = $_POST['amountChar'];
-        $amountWeapon = $_POST['amountWeapon'];
-        $cost = $_POST['cost'];
-        $typeAcc = $_POST['typeAcc'];
-        $taikhoan = $_POST['taikhoan'];
-        $password = $_POST['password'];
+        $loaiacc = $_POST['loaiacc'];
 
-        $target_dir = __DIR__ . "/../../public/asset/img/";
+        $target_dir = __DIR__ . "/../../public/asset/imgType/";
         $target_file = $target_dir . basename($_FILES["img"]["name"]);
 
         session_start();
@@ -56,7 +48,7 @@ class TypeAccountController extends Controller
         if (file_exists($target_file)) {
             $_SESSION['flash_message'] = "Ảnh đã tồn tại trong hệ thống!!!";
             $_SESSION['type_message'] = "danger";
-            header("Location: ../admin/account-create");
+            header("Location: ../admin/type-account-create");
             exit();
         }
 
@@ -68,19 +60,17 @@ class TypeAccountController extends Controller
         } else {
             $_SESSION['flash_message'] = "Lỗi không thể load ảnh!!!";
             $_SESSION['type_message'] = "danger";
-            header("Location: ../admin/account-create");
+            header("Location: ../admin/type-account-create");
             exit();
         }
 
-
-
-        $account = $this->accountModel->createAccount($level, $area, $amountChar, $amountWeapon, $img_name, $cost, $typeAcc, $taikhoan, $password);
-        if ($account) {
+        $type = $this->typeAccountModel->createTypeAccount($loaiacc, $img_name);
+        if ($type) {
             // Redirect to the user list page or show a success message
-            $_SESSION['flash_message'] = "Thêm account thành công!!!";
+            $_SESSION['flash_message'] = "Thêm loại loại account thành công!!!";
             $_SESSION['type_message'] = "success";
 
-            header("Location: ../admin/account-list");
+            header("Location: ../admin/type-account-list");
             exit();
         } else {
             // Handle the case where the user creation failed
@@ -88,54 +78,42 @@ class TypeAccountController extends Controller
         }
     }
 
-    public function getAccount($accId)
+    public function getTypeAccount($loaiAccId)
     {
-        $account = $this->accountModel->getAccountById($accId);
-        $types = (new TypeAccountModel())->getAllAccounts();
+        $type = $this->typeAccountModel->getTypeAccountById($loaiAccId);
 
-        $this->render('admin\account-detail', ['account' => $account, 'types' => $types]);
+        $this->render('admin\type-account-detail', ['type' => $type]);
     }
 
-    public function updateAccount($accId)
+    public function updateTypeAccount($loaiAccId)
     {
         // Handle form submission to update a user
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $this->processFormUpdate($accId);
+            $this->processFormUpdate($loaiAccId);
         } else {
             // Fetch the user data and display the form to update
-            $account = $this->accountModel->getAccountById($accId);
-            $types = (new TypeAccountModel())->getAllAccounts();
+            $type = $this->typeAccountModel->getTypeAccountById($loaiAccId);
 
-            $this->render('admin\account-form', ['account' => $account, 'types' => $types]);
+            $this->render('admin\type-account-form', ['type' => $type]);
         }
     }
 
-    private function processFormUpdate($accId)
+    private function processFormUpdate($loaiAccId)
     {
 
         // Retrieve form data
-        $level = $_POST['level'];
-        $area = $_POST['area'];
-        $amountChar = $_POST['amountChar'];
-        $amountWeapon = $_POST['amountWeapon'];
-        $cost = $_POST['cost'];
-        $typeAcc = $_POST['typeAcc'];
-        $taikhoan = $_POST['taikhoan'];
-        $password = $_POST['password'];
-
+        $loaiacc = $_POST['loaiacc'];
         session_start();
 
         // Check if file already exists
-
-
         if (isset($_FILES['img']) && $_FILES["img"]["name"] != null) {
-            $target_dir = __DIR__ . "/../../public/asset/img/";
+            $target_dir = __DIR__ . "/../../public/asset/imgType/";
             $target_file = $target_dir . basename($_FILES["img"]["name"]);
 
             if (file_exists($target_file)) {
                 $_SESSION['flash_message'] = "Ảnh đã tồn tại trong hệ thống!!!";
                 $_SESSION['type_message'] = "danger";
-                header("Location: ../admin/account-form");
+                header("Location: ../admin/type-account-form");
                 exit();
             }
 
@@ -143,36 +121,36 @@ class TypeAccountController extends Controller
             $img_name = $_FILES["img"]["name"];
             move_uploaded_file($img['tmp_name'], $target_file);
         } else {
-            $accountCurrent = $this->accountModel->getAccountById($accId);
+            $accountCurrent = $this->typeAccountModel->getTypeAccountById($loaiAccId);
             $img_name = $accountCurrent['img'];
         }
 
         // Call the model to update the user
-        $account = $this->accountModel->updateAccount($accId, $level, $area, $amountChar, $amountWeapon, $img_name, $cost, $typeAcc, $taikhoan, $password);
+        $account = $this->typeAccountModel->updateTypeAccount($loaiAccId, $loaiacc, $img_name);
 
         if ($account) {
             // Redirect to the user list page or show a success message
-            $_SESSION['flash_message'] = "Cập nhật thông tin account thành công!!!";
+            $_SESSION['flash_message'] = "Cập nhật thông tin loại account thành công!!!";
             $_SESSION['type_message'] = "success";
 
-            header("Location: ../admin/account-list");
+            header("Location: ../admin/type-account-list");
             exit();
         } else {
             // Handle the case where the user creation failed
-            echo 'Account update failed.';
+            echo 'Type account update failed.';
         }
     }
 
-    public function deleteAccount($accId)
+    public function deleteTypeAccount($accId)
     {
         // Call the model to delete the user
-        $this->accountModel->deleteUser($accId);
+        $this->typeAccountModel->deleteTypeAccount($accId);
 
         // Redirect to the user list page after deletion
         session_start();
-        $_SESSION['flash_message'] = "Xóa account thành công!!!";
+        $_SESSION['flash_message'] = "Xóa loại account thành công!!!";
         $_SESSION['type_message'] = "success";
 
-        header("Location: ../admin/account-list");
+        header("Location: ../admin/type-account-list");
     }
 }
