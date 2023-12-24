@@ -165,7 +165,6 @@ class UserController extends Controller
             // Redirect to the user list page or show a success message
             $_SESSION['flash_message'] = "Tạo tài khoản thành công!!!";
             $_SESSION['type_message'] = "success";
-            $_SESSION['currentUser'] = $this->userModel->getUserByUsername($username);
 
             header("Location: ../admin/user-list");
             exit();
@@ -204,7 +203,7 @@ class UserController extends Controller
             $_SESSION['flash_message'] = "Vui lòng chọn tên đăng nhập khác!!!";
             $_SESSION['type_message'] = "danger";
 
-            header('Location: /admin/update-user-info/' . $userId);
+            header('Location: ../admin/update-user-info/' . $userId);
             exit();
         }
 

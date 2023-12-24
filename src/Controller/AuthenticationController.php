@@ -86,6 +86,12 @@ class AuthenticationController
         $user_id = $_POST['user_id'];
         $sotien = $_POST['sotien'];
         session_start();
+        if ($sotien == "") {
+            $_SESSION['flash_message'] = "Vui lòng chọn mệnh giá!!!";
+            $_SESSION['type_message'] = "danger";
+            header("Location: ../user/naptien");
+            exit();
+        }
         $user = (new UserModel())->naptien($user_id, $sotien);
         $naptien = (new lichsunaptienModel())->AddLichSuNap($user_id, $sotien);
         $_SESSION['currentUser'] = (new UserModel())->getUserById($user_id);

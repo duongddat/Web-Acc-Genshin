@@ -31,19 +31,19 @@ if (isUserLoggedIn()) {
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark navbar_config">
         <div class="container">
-            <a class="navbar-brand" href="/">Shop Acc Genshin</a>
+            <a class="navbar-brand text-uppercase" href="/">Shop Acc Genshin</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
+                        <a class="nav-link  " href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/user/naptien">Nạp Tiền</a>
+                        <a class="nav-link  " href="/user/naptien">Nạp Tiền</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
@@ -52,7 +52,7 @@ if (isUserLoggedIn()) {
                     if ($loginUser) {
                     ?>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown"> Hello! <?= $loginUser['taikhoan'] ?>, <?= $loginUser['sotien'] ?> đồng</a>
+                            <a class="nav-link   dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown"> Hello! <?= $loginUser['taikhoan'] ?>, <b class="text-color-cost"><?= $loginUser['sotien'] ?> đồng</b></a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="/user/changePassword">Đổi mật khẩu</a></li>
                                 <li><a class="dropdown-item" href="/user/naptienlist">Lịch Sử Nạp</a></li>
@@ -75,10 +75,10 @@ if (isUserLoggedIn()) {
                         </li>
                     <?php } else { ?>
                         <li class="nav-item me-2">
-                            <a class="btn btn-warning nav-link" href="/user/signin">Đăng nhập</a>
+                            <a class="btn btn-warning nav-link  " href="/user/signin">Đăng nhập</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-warning nav-link" href="/user/register">Đăng ký</a>
+                            <a class="btn btn-warning nav-link  " href="/user/register">Đăng ký</a>
                         </li>
                     <?php } ?>
                 </ul>

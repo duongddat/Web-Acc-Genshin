@@ -1,8 +1,8 @@
 <?php ob_start(); ?>
-<p class="title-home">Shop mua bán nick game top 1 Việt Nam</p>
-<div class="gt">
-    <div class="nt">
-        <p class="list-nt">Top nạp tiền</p>
+<p class="title-home text-uppercase">Shop mua bán nick game top 1 Việt Nam</p>
+<div class="gt nt row">
+    <div class="col-lg-4 col-md-12">
+        <p class="title-nt">Top nạp tiền</p>
         <ul class="list-nt">
             <?php $id = 1;
             foreach ($allusers as $user) : ?>
@@ -10,10 +10,12 @@
             <?php endforeach; ?>
         </ul>
     </div>
-    <iframe class="iframe" src="https://www.youtube.com/embed/NToeiWqGmuU">
-    </iframe>
+    <div class="col-lg-8 col-md-12">
+        <iframe class="iframe" src="https://www.youtube.com/embed/NToeiWqGmuU">
+        </iframe>
+    </div>
 </div>
-<p class="title-home">Shop Acc GenShin Uy Tín</p>
+<p class="title-home text-uppercase">Shop Acc GenShin Uy Tín</p>
 <div class="container-lg">
     <div class="row mb-5">
         <?php foreach ($typeaccs as $typeacc) : ?>

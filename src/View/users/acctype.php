@@ -30,9 +30,6 @@ $decodedUri = urldecode($uri);
                     <span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="6" style="width: 203px;">
                         <span class="selection">
                             <span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-price-77-container">
-                                <span class="select2-selection__rendered" id="select2-price-77-container" role="textbox" aria-readonly="true" title="Chọn giá">
-                                    Chọn giá
-                                </span>
                                 <span class="select2-selection__arrow" role="presentation">
                                     <b role="presentation"></b>
                                 </span>
@@ -42,7 +39,7 @@ $decodedUri = urldecode($uri);
                     </span>
                 </div>
                 <div class="row">
-                    <div class="col-6 mt-3">
+                    <div class="col-12 mt-3">
                         <label class="form-label">Server</label>
                         <select required class="form-control" name="acc_server" fdprocessedid="dvgca3">
                             <option value="allserver">Chọn Server</option>
@@ -108,7 +105,7 @@ $decodedUri = urldecode($uri);
                     </article>
                 <?php endforeach; ?>
             <?php } else { ?>
-                <p class="text-center">Không tài khoản phù hợp!!!</p>
+                <img class="acc-notfound" src="https://img.freepik.com/premium-vector/search-result-find-illustration_585024-17.jpg" alt="">
             <?php } ?>
         </div>
     </div>

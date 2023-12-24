@@ -14,8 +14,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="area" class="form-label">Khu vực:</label>
-                        <select class="form-select" aria-label="Default select example" name="area" id="area">
-                            <option selected>--Chọn khu vực--</option>
+                        <select class="form-select" aria-label="Default select example" name="area" id="area" required>
+                            <option value="" selected>--Chọn khu vực--</option>
                             <option value="Asia" <?= $account['khuvuc'] == 'Asia' ? 'selected' : '' ?>>Asia</option>
                             <option value="America" <?= $account['khuvuc'] == 'America' ? 'selected' : '' ?>>America</option>
                             <option value="Europe" <?= $account['khuvuc'] == 'Europe' ? 'selected' : '' ?>>Europe</option>
@@ -42,7 +42,7 @@
                     <div class="mb-3">
                         <label for="typeAcc" class="form-label">Loại account:</label>
                         <select class="form-select" aria-label="Default select example" name="typeAcc" id="typeAcc" required>
-                            <option selected>--Chọn loại account--</option>
+                            <option value="" selected>--Chọn loại account--</option>
                             <?php foreach ($types as $type) : ?>
                                 <option value="<?= $type["loaiacc_id"] ?>" <?= $account['loaiacc_id'] == $type["loaiacc_id"] ? 'selected' : '' ?>><?= $type["loaiacc"] ?></option>
                             <?php endforeach; ?>

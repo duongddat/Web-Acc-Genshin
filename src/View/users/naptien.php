@@ -30,16 +30,16 @@
                             <option value="1000000">1,000,000 </option>
                         </select>
                     </div>
-                    <div class="row">
+                    <div class="form-group row">
                         <div class="col-12 col-lg-6 mt-2">
                             <label>Seri thẻ</label>
-                            <div class="input-group row">
+                            <div class="input-group">
                                 <input name="card_seri" type="number" class="form-control concave " value="" placeholder="Điền seri của thẻ cào">
                             </div>
                         </div>
                         <div class="col-12 col-lg-6 mt-2">
                             <label>Mã thẻ</label>
-                            <div class="input-group row">
+                            <div class="input-group">
                                 <input name="card_pin" type="number" class="form-control concave " value="" placeholder="Điền mã của thẻ cào">
                             </div>
                         </div>
@@ -54,7 +54,7 @@
             </div>
             <div class="col-12 col-lg-6">
                 <h3 class="text-center">Hướng dẫn</h3>
-                <p>
+                <p class="text-center">
                     <font color="#ff0000"><b>Lưu ý!!!</b> Vui lòng chọn đúng mệnh giá, sai là mất thẻ.<br>Ưu tiên nạp Thẻ Viettel ít lỗi và xử lí nhanh<br><br><br><br></font>
                 </p>
             </div>

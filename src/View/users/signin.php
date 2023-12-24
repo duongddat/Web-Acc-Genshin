@@ -17,8 +17,8 @@
                     </div>
 
                     <div class="text-end mb-3">
-                        <a class="btn btn-light" href="/user/register">Đăng ký</a>
-                        <input class="btn btn-success" type="submit" value="Đăng nhập">
+                        <a class="btn btn-opa" href="/user/register">Đăng ký</a>
+                        <input class="btn" type="submit" value="Đăng nhập">
                     </div>
                 </form>
             </div>

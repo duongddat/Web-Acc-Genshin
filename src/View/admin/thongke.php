@@ -1,114 +1,115 @@
 <?php ob_start(); ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <?php
-    $tong= $tk['tong'];
-    $daban=$tk['damua'];
-    $chuaban=$tong-$daban;
-    $soLieuDaBan = $daban;
-    $soLieuChuaBan = $chuaban;
-    $phantram=($daban/$tong)*100;
-    ?>
-<div class="container">  
-    <div class="card">
-    <p class="card-text">Tổng Doanh Thu</p>
-    <div class="card-body">
-        <div style=" height: 300px;display: flex; justify-content: center; align-items: center;">
-            <canvas  id="myPieChart" width="250" height="250"></canvas>
+$tong = $tk['tong'];
+$daban = $tk['damua'];
+$chuaban = $tong - $daban;
+$soLieuDaBan = $daban;
+$soLieuChuaBan = $chuaban;
+$phantram = ($daban / $tong) * 100;
+?>
+<div class="container">
+    <div class="card card_main">
+        <p class="card-text-title">Tổng Doanh Thu</p>
+        <div class="card-body">
+            <div style=" height: 300px;display: flex; justify-content: center; align-items: center;">
+                <canvas id="myPieChart" width="250" height="250"></canvas>
+            </div>
+            <p class="card-text">Đã Bán: <?= $phantram ?> %</p>
+            <p class="card-text">Tổng Doanh Thu Có Được: <?= $tk['TongSoTien']; ?> VND</p>
+            <p class="card-text">Số Acc Đã Bán: <?= $daban; ?> Acc</p>
+            <p class="card-text">Số Acc Chưa Bán: <?= $chuaban; ?> Acc</p>
         </div>
-        <p class="card-text">Đã Bán: <?=$phantram?> %</p>
-        <p class="card-text">Tổng Doanh Thu Có Được: <?=$tk['TongSoTien'];?> VND</p>
-        <p class="card-text">Số Acc Đã Bán: <?=$daban;?> Acc</p>
-        <p class="card-text">Số Acc Chưa Bán: <?=$chuaban;?> Acc</p>
+
+
+
+        <script>
+            // Dữ liệu về đã bán và chưa bán từ PHP
+            var data = {
+                labels: ['Đã bán', 'Chưa bán'],
+                datasets: [{
+                    data: [<?php echo $soLieuDaBan; ?>, <?php echo $soLieuChuaBan; ?>],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.5)',
+                        'rgba(54, 162, 235, 0.5)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            // Thiết lập biểu đồ hình tròn
+            var ctx = document.getElementById('myPieChart').getContext('2d');
+            var myPieChart = new Chart(ctx, {
+                type: 'pie',
+                data: data,
+                options: {
+                    // Cấu hình thêm nếu cần
+                }
+            });
+        </script>
     </div>
-
-    
-
-    <script>
-        // Dữ liệu về đã bán và chưa bán từ PHP
-        var data = {
-            labels: ['Đã bán', 'Chưa bán'],
-            datasets: [{
-                data: [<?php echo $soLieuDaBan; ?>, <?php echo $soLieuChuaBan; ?>],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.5)',
-                    'rgba(54, 162, 235, 0.5)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)'
-                ],
-                borderWidth: 1
-            }]
-        };
-
-        // Thiết lập biểu đồ hình tròn
-        var ctx = document.getElementById('myPieChart').getContext('2d');
-        var myPieChart = new Chart(ctx, {
-            type: 'pie',
-            data: data,
-            options: {
-                // Cấu hình thêm nếu cần
-            }
-        });
-    </script>
-    </div>
-    <div class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
         <?php foreach ($accounts as $index => $a) :
             if ($a['TongSoLuong'] != 0) {
                 $soLieuDaBan = $a['TongSoLuongDamua1'];
                 $soLieuChuaBan = $a['TongSoLuong'] - $a['TongSoLuongDamua1'];
-                $phantram=($a['TongSoLuongDamua1']/$a['TongSoLuong'])*100;
+                $phantram = ($a['TongSoLuongDamua1'] / $a['TongSoLuong']) * 100;
         ?>
-        <div class="col">
-            <div class="card">
-            <p class="card-text">Loại <?php echo $a['TenLoai']; ?> Đã Bán : <?php echo $phantram ?> %</p>
-                <div class="card-body">
-                    <div style="height: 300px; display: flex; justify-content: center; align-items: center;">
-                        <canvas id="myPieChart<?php echo $index; ?>" width="250" height="250"></canvas>
-                    </div>
-                    <p class="card-text">Tổng Doanh Thu: <?php echo $a['TongTien']; ?> VND</p>
-                    <p class="card-text">Số Acc Đã Bán: <?php echo$soLieuDaBan; ?> acc</p>
-                    <p class="card-text">Số Acc Chưa Bán: <?php echo$soLieuChuaBan; ?> acc</p>
-                    <script>
-                        // Function to create chart
-                        function createChart<?php echo $index; ?>() {
-                            var data<?php echo $index; ?> = {
-                                labels: ['Đã bán', 'Chưa bán'],
-                                datasets: [{
-                                    data: [<?php echo $soLieuDaBan; ?>, <?php echo $soLieuChuaBan; ?>],
-                                    backgroundColor: [
-                                        'rgba(255, 99, 132, 0.5)',
-                                        'rgba(54, 162, 235, 0.5)'
-                                    ],
-                                    borderColor: [
-                                        'rgba(255, 99, 132, 1)',
-                                        'rgba(54, 162, 235, 1)'
-                                    ],
-                                    borderWidth: 1
-                                }]
-                            };
+                <div class="col">
+                    <div class="card">
+                        <p class="card-text card-text-title">Loại <?php echo $a['TenLoai']; ?></p>
+                        <div class="card-body">
+                            <div style="height: 300px; display: flex; justify-content: center; align-items: center;">
+                                <canvas id="myPieChart<?php echo $index; ?>" width="250" height="250"></canvas>
+                            </div>
+                            <p class="card-text">Đã Bán: <?php echo $phantram ?> %</p>
+                            <p class="card-text">Tổng Doanh Thu: <?php echo $a['TongTien']; ?> VND</p>
+                            <p class="card-text">Số Acc Đã Bán: <?php echo $soLieuDaBan; ?> acc</p>
+                            <p class="card-text">Số Acc Chưa Bán: <?php echo $soLieuChuaBan; ?> acc</p>
+                            <script>
+                                // Function to create chart
+                                function createChart<?php echo $index; ?>() {
+                                    var data<?php echo $index; ?> = {
+                                        labels: ['Đã bán', 'Chưa bán'],
+                                        datasets: [{
+                                            data: [<?php echo $soLieuDaBan; ?>, <?php echo $soLieuChuaBan; ?>],
+                                            backgroundColor: [
+                                                'rgba(255, 99, 132, 0.5)',
+                                                'rgba(54, 162, 235, 0.5)'
+                                            ],
+                                            borderColor: [
+                                                'rgba(255, 99, 132, 1)',
+                                                'rgba(54, 162, 235, 1)'
+                                            ],
+                                            borderWidth: 1
+                                        }]
+                                    };
 
-                            // Chart creation
-                            var ctx<?php echo $index; ?> = document.getElementById('myPieChart<?php echo $index; ?>').getContext('2d');
-                            var myPieChart<?php echo $index; ?> = new Chart(ctx<?php echo $index; ?>, {
-                                type: 'pie',
-                                data: data<?php echo $index; ?>,
-                                options: {
-                                    // Additional configurations if needed
+                                    // Chart creation
+                                    var ctx<?php echo $index; ?> = document.getElementById('myPieChart<?php echo $index; ?>').getContext('2d');
+                                    var myPieChart<?php echo $index; ?> = new Chart(ctx<?php echo $index; ?>, {
+                                        type: 'pie',
+                                        data: data<?php echo $index; ?>,
+                                        options: {
+                                            // Additional configurations if needed
+                                        }
+                                    });
                                 }
-                            });
-                        }
-                        createChart<?php echo $index; ?>();
-                    </script>
+                                createChart<?php echo $index; ?>();
+                            </script>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
         <?php }
         endforeach; ?>
     </div>
 </div>
 <div class="container-white">
-    <h4>Danh Sách Hóa Đơn</h4>
+    <h4 class="card-text-title">Danh Sách Hóa Đơn</h4>
     <div class="row">
         <div class="col-sm-12">
             <table id="example1" class="table table-bordered table-striped dataTable no-footer dtr-inline" role="grid" aria-describedby="example1_info">
@@ -147,5 +148,6 @@
         </div>
     </div>
 </div>
+
 <?php $content = ob_get_clean(); ?>
 <?php include(__DIR__ . '/../../../templates/layout.php'); ?>

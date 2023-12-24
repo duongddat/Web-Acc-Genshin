@@ -52,6 +52,20 @@ class AccountController extends Controller
 
         session_start();
 
+        if ($area == "") {
+            $_SESSION['flash_message'] = "Vui lòng chọn khu vực!!!";
+            $_SESSION['type_message'] = "danger";
+            header("Location: ../admin/account-create");
+            exit();
+        }
+
+        if ($typeAcc == "") {
+            $_SESSION['flash_message'] = "Vui lòng chọn loại account!!!";
+            $_SESSION['type_message'] = "danger";
+            header("Location: ../admin/account-create");
+            exit();
+        }
+
         // Check if file already exists
         if (file_exists($target_file)) {
             $_SESSION['flash_message'] = "Ảnh đã tồn tại trong hệ thống!!!";
@@ -124,10 +138,21 @@ class AccountController extends Controller
         $password = $_POST['password'];
 
         session_start();
+        if ($area == "") {
+            $_SESSION['flash_message'] = "Vui lòng chọn khu vực!!!";
+            $_SESSION['type_message'] = "danger";
+            header("Location: ../admin/account-create");
+            exit();
+        }
+
+        if ($typeAcc == "") {
+            $_SESSION['flash_message'] = "Vui lòng chọn loại account!!!";
+            $_SESSION['type_message'] = "danger";
+            header("Location: ../admin/account-create");
+            exit();
+        }
 
         // Check if file already exists
-
-
         if (isset($_FILES['img']) && $_FILES["img"]["name"] != null) {
             $target_dir = __DIR__ . "/../../public/asset/img/";
             $target_file = $target_dir . basename($_FILES["img"]["name"]);

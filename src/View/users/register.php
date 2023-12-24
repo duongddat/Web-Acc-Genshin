@@ -28,8 +28,8 @@
                         <input type="password" class="form-control" id="configPassword" name="configPassword" required>
                     </div>
                     <div class="text-end mb-3">
-                        <a class="btn btn-light" href="/user/signin">Đăng nhập</a>
-                        <input class="btn btn-success" type="submit" value="Đăng ký">
+                        <a class="btn" href="/user/signin">Đăng nhập</a>
+                        <input class="btn" type="submit" value="Đăng ký">
                     </div>
                 </form>
             </div>
